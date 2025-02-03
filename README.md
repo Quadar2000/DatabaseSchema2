@@ -1,0 +1,1 @@
+Web application with the same functionalities as DatabaseSchema ( see: ReadMe file in DatabaseSAchema repository) but backend is made in SpringBoot. Session managment, user authentication and security features are implemented using SpringBoot mechanisms. 
