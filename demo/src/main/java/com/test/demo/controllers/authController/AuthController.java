@@ -76,10 +76,6 @@ public class AuthController {
     }
 
     @GetMapping("/csrf-token")
-    // public ResponseEntity<Map<String, String>> getCsrfToken(HttpServletRequest request) {
-    //     CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
-    //     return ResponseEntity.ok(Map.of("token", csrfToken.getToken()));
-    // }
     public ResponseEntity<Void> getCsrfToken() {
         // Token CSRF jest automatycznie generowany przez Spring Security
         return ResponseEntity.ok().build();

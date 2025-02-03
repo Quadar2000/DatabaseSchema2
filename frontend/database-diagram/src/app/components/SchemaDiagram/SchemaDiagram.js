@@ -11,7 +11,7 @@ import Spinner from '../Spinner/Spinner';
 
 const SchemaDiagram = () => {
   const d3Container = useRef(null);
-  const { roles, id } = useAuth();
+  const { roles, id, refreshUser } = useAuth();
   const [showDiagram, setShowDiagram] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -287,6 +287,7 @@ const SchemaDiagram = () => {
   }, [showDiagram, data]);
 
   useEffect(() => {
+    refreshUser();
     const fetchCsrfToken = async () => {
       const token = await getCsrfToken();
       setCsrfToken(token);

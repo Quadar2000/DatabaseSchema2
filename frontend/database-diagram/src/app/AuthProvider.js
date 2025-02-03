@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  const fetchSession = async () => {
+  const fetchSession = async (logOut = false) => {
     try {
       const response = await axios.get('http://localhost:8080/api/auth/session-info',
         {
@@ -32,10 +32,7 @@ export const AuthProvider = ({ children }) => {
         setUser("");
         setRoles("");
         setId("");
-        router.push({
-          pathname: '/',
-          query: { message: 'Session expired, you have been logged out' },
-        });
+        (logOut)?router.push(`/?message=You have been logged out`):router.push(`/`);
       } else {
         console.error('Error while checking session:', error.response?.message);
       }
@@ -64,7 +61,7 @@ export const AuthProvider = ({ children }) => {
         console.error('Error while logging out:', error);
     }
     setLoading(true); 
-    await fetchSession(); 
+    await fetchSession(true); 
     setLoading(false); 
   }
   

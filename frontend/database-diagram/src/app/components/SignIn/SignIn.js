@@ -5,7 +5,7 @@ import axios from 'axios';
 import StyledDiv from '../StyledDiv/StyledDiv';
 import StyledButton from '../StyledButton/StyledButton';
 import { getCsrfToken } from '@/app/functions/getCsrfToken/getCsrfToken';
-import { useRouter } from 'next/navigation';
+import { useRouter,useSearchParams } from 'next/navigation';
 import { useAuth } from '@/app/AuthProvider';
 
 export default function SignIn() {
@@ -14,8 +14,8 @@ export default function SignIn() {
   const [csrfToken, setCsrfToken] = useState('');
   const router = useRouter();
   const { refreshUser } = useAuth();
-  //const [message, setMessage] = useState('');
-  const { message } = router.query;
+  const searchParams = useSearchParams();
+  const message = searchParams.get('message');
   
 
   const handleSubmit = async (event) => {
@@ -63,16 +63,10 @@ export default function SignIn() {
       fetchCsrfToken();
     }, []);
 
-    // useEffect(() => {
-    //   if (router.state?.message) {
-    //     setMessage(router.state.message);
-    //   }
-    // }, [router.state]);
 
   return (
     <StyledDiv>
     <form onSubmit={handleSubmit}>
-      {/* <input name="csrfToken" type="hidden" defaultValue={csrfToken} /> */}
          <label>Email</label>
          <br />
          <input id="email" name="email" type="text" required />

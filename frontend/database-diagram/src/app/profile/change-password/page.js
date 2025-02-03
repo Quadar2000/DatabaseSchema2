@@ -7,6 +7,7 @@ import StyledForm from '@/app/components/StyledForm/StyledForm';
 import { useEffect, useState } from 'react';
 import { getCsrfToken } from '@/app/functions/getCsrfToken/getCsrfToken';
 import axios from 'axios';
+import { useAuth } from '@/app/AuthProvider';
 
 const ChangePassword = () => {
   const [newPassword, setNewPassword] = useState("");
@@ -14,8 +15,10 @@ const ChangePassword = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [csrfToken, setCsrfToken] = useState('');
+  const { refreshUser } = useAuth();
 
   useEffect(() => {
+    refreshUser();
     const fetchCsrfToken = async () => {
       const token = await getCsrfToken();
       setCsrfToken(token);
