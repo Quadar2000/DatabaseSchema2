@@ -15,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
@@ -25,7 +24,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.test.demo.services.customUserDetailsService.CustomUserDetailsService;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 
@@ -46,9 +44,6 @@ public class SecurityConfig {
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) // Przechowywanie tokenu CSRF w ciasteczkach
                 .ignoringRequestMatchers("/api/validate-token")
                 .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
-                // .requireCsrfProtectionMatcher(request -> 
-                //     "POST".equals(request.getMethod()) // Ograniczenie CSRF do metod POST
-                // )
                 .requireCsrfProtectionMatcher(new RequestMatcher() { // Niestandardowy RequestMatcher
                     @Override
                     public boolean matches(HttpServletRequest request) {
@@ -95,10 +90,6 @@ public class SecurityConfig {
                 .invalidateHttpSession(true)  // Unieważnia sesję
                 .clearAuthentication(true)  // Usuwa dane autoryzacyjne
                 .deleteCookies("JSESSIONID")  // Usuwa ciasteczko sesji
-                // .logoutSuccessHandler((request, response, authentication) -> {
-                //     response.setStatus(HttpServletResponse.SC_OK);
-                //     response.getWriter().write("Logged out successfully");
-                // })
             );
 
         return http.build();
