@@ -15,10 +15,8 @@ const ChangePassword = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [csrfToken, setCsrfToken] = useState('');
-  const { refreshUser } = useAuth();
 
   useEffect(() => {
-    refreshUser();
     const fetchCsrfToken = async () => {
       const token = await getCsrfToken();
       setCsrfToken(token);

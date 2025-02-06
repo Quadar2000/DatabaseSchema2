@@ -11,7 +11,7 @@ import { getCsrfToken } from "@/app/functions/getCsrfToken/getCsrfToken";
 import axios from 'axios';
 
 const Profile = () => {
-    const {id, refreshUser } = useAuth();
+    const {id} = useAuth();
     const router = useRouter();
 
     const [userData, setUser] = useState({});
@@ -48,7 +48,6 @@ const Profile = () => {
                 
               }
         }
-        refreshUser();
         getUser();
         const fetchCsrfToken = async () => {
             const token = await getCsrfToken();

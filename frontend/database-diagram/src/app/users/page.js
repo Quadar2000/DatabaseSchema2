@@ -21,7 +21,6 @@ const UsersList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
   const [csrfToken, setCsrfToken] = useState('');
-  const { refreshUser } = useAuth();
 
   const fetchUsers = async () => {
     setLoading(true);
@@ -55,7 +54,6 @@ const UsersList = () => {
   
 
   useEffect(() => {
-    refreshUser();
     fetchUsers();
     const fetchCsrfToken = async () => {
       const token = await getCsrfToken();

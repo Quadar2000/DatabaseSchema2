@@ -6,8 +6,10 @@ import { useRouter } from 'next/navigation';
 import Spinner from '../Spinner/Spinner';
 
 const WithRole = ({  children,role }) => {
-  const { roles, loading } = useAuth();
+  const { roles, loading, refreshUser } = useAuth();
   const router = useRouter();
+
+  refreshUser();
 
   if (loading) return <Spinner/>;
   if (roles !== role) {router.push('/');}

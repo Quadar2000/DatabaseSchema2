@@ -20,7 +20,6 @@ const Register = () => {
   const [success, setSuccess] = useState("");
   const [csrfToken, setCsrfToken] = useState('');
   const [newPassword, setNewPassword] = useState("");
-  const { refreshUser } = useAuth();
 
   const [formState, dispatch] = useReducer(formReducer, {
     name: '',
@@ -30,7 +29,6 @@ const Register = () => {
   });
 
   useEffect(() => {
-    refreshUser();
     const fetchCsrfToken = async () => {
       const token = await getCsrfToken();
       setCsrfToken(token);
