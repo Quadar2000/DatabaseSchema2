@@ -28,7 +28,6 @@ const Permissions = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [permissionToDelete, setPermissionToDelete] = useState(null);
   const [csrfToken, setCsrfToken] = useState('');
-  const { refreshUser } = useAuth();
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -72,7 +71,6 @@ const Permissions = () => {
 
 
   useEffect(() => {
-    refreshUser();
     fetchPermissions();
     const fetchCsrfToken = async () => {
       const token = await getCsrfToken();
