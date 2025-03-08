@@ -8,7 +8,7 @@ import ConfirmModal from "../components/ConfirmModal/ConfirmModal";
 import { getCsrfToken } from "../functions/getCsrfToken/getCsrfToken";
 import StyledListItem from "../components/StyledListItem/StyledListItem";
 import axios from "axios";
-import StyledDiv from "../components/StyledDiv/StyledDiv";
+import {StyledDiv } from "../components/StyledDiv/StyledDiv";
 import Spinner from "../components/Spinner/Spinner";
 
 const UsersList = () => {
@@ -147,7 +147,7 @@ const UsersList = () => {
     <WithRole role="ROLE_ADMIN">
       {loading ? 
       <Spinner/> :
-      <StyledDiv>
+      <StyledDiv style={{position: "absolute",width: '800px', left: '50%',top: '10%',transform: 'translate(-50%, 0%)'}}>
         <h1>List of users</h1>
         {users.length === 0 ? <p>There is no user in database</p>:
         <ul>

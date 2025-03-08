@@ -2,9 +2,10 @@
 
 import { useState,useEffect } from 'react';
 import axios from 'axios';
-import StyledDiv from '../StyledDiv/StyledDiv';
+import {StyledDiv, DivInForm} from '../StyledDiv/StyledDiv';
 import StyledButton from '../StyledButton/StyledButton';
 import { getCsrfToken } from '@/app/functions/getCsrfToken/getCsrfToken';
+import {StyledForm, StyledInput} from '@/app/components/StyledForm/StyledForm';
 import { useRouter,useSearchParams } from 'next/navigation';
 import { useAuth } from '@/app/AuthProvider';
 
@@ -12,6 +13,8 @@ export default function SignIn() {
 
   const [error, setError] = useState('');
   const [csrfToken, setCsrfToken] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const router = useRouter();
   const { refreshUser } = useAuth();
   const searchParams = useSearchParams();
@@ -20,8 +23,6 @@ export default function SignIn() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const email = event.target.email.value;
-    const password = event.target.password.value;
     const token = await getCsrfToken();
     setCsrfToken(token);
 
@@ -65,23 +66,31 @@ export default function SignIn() {
 
 
   return (
-    <StyledDiv>
-    <form onSubmit={handleSubmit}>
-         <label>Email</label>
-         <br />
-         <input id="email" name="email" type="text" required />
-         <br />
-         <br />
-         <label>Password</label>
-         <br />
-         <input id="password" name="password" type="password" required />
-         <br />
-         <br />
-         <StyledButton type="submit">Sign in</StyledButton>
-         <br />
-         <br />
-        
-    </form>
+    <StyledDiv className='black'>
+      <StyledForm onSubmit={handleSubmit}>
+
+        <DivInForm>
+          <label>Email</label>
+          <StyledInput 
+            type="text" 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required 
+          />
+        </DivInForm>
+
+        <DivInForm>
+          <label>Password</label>
+          <StyledInput 
+            type="password" 
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required 
+          />
+        </DivInForm>
+
+        <StyledButton type = "submit">Sign in</StyledButton>
+    </StyledForm>
     {error && <p style={{ color: "red" }}>{error}</p>}
     {message && <p style={{ color: 'green' }}>{message}</p>}
     </StyledDiv>

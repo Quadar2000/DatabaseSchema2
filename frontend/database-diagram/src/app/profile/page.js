@@ -4,7 +4,7 @@ import IsLoggedIn from '@/app/components/IsLoggedIn/IsLoggedIn';
 import { useRouter } from 'next/navigation';
 import styles from "./profile.module.css";
 import StyledButton from '../components/StyledButton/StyledButton';
-import StyledDiv from '../components/StyledDiv/StyledDiv';
+import {StyledDiv} from '../components/StyledDiv/StyledDiv';
 import { useAuth } from '../AuthProvider';
 import { useEffect, useState } from 'react';
 import { getCsrfToken } from "@/app/functions/getCsrfToken/getCsrfToken";
@@ -62,8 +62,7 @@ const Profile = () => {
       }
     return(
         <IsLoggedIn>
-          <div style={{display: 'flex',justifyContent: 'center'}}>
-            <StyledDiv style={{marginTop: '200px',border: '1px solid #ccc'}}>
+          <StyledDiv style={{position: "absolute",width: '250px', left: '50%',top: '30%',transform: 'translate(-50%, 0%)'}}>
                 <h1>Username</h1>
                 <p>{userData.name}</p>
                 <h1>Email</h1>
@@ -71,7 +70,6 @@ const Profile = () => {
                 <StyledButton onClick = {handleChangePasswordClick}>Change Password</StyledButton>
                 {error && <p style={{ color: "red" }}>{error}</p>}
             </StyledDiv>
-          </div>
             
         </IsLoggedIn>
     

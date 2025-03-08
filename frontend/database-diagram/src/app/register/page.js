@@ -1,32 +1,29 @@
 "use client";
 
 import WithRole from "../components/WithRole/WithRole";
-import { useEffect, useState, useReducer } from 'react';
-import StyledDiv from "../components/StyledDiv/StyledDiv";
-import StyledForm from "../components/StyledForm/StyledForm";
+import { useEffect, useState } from 'react';
+import {StyledDiv, DivInForm} from "../components/StyledDiv/StyledDiv";
+import {StyledForm,StyledInput} from "../components/StyledForm/StyledForm";
 import StyledButton from "../components/StyledButton/StyledButton";
 import { getCsrfToken } from "../functions/getCsrfToken/getCsrfToken";
 import axios from "axios";
 
-const formReducer = (state, action) => {
-    return {
-      ...state,
-      [action.name]: action.value
-    };
-  };
+// const formReducer = (state, action) => {
+//     return {
+//       ...state,
+//       [action.name]: action.value
+//     };
+//   };
 
 const Register = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [csrfToken, setCsrfToken] = useState('');
-  const [newPassword, setNewPassword] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [formState, dispatch] = useReducer(formReducer, {
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
 
   useEffect(() => {
     const fetchCsrfToken = async () => {
@@ -39,8 +36,6 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { password, confirmPassword} = formState;
-
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
@@ -52,7 +47,11 @@ const Register = () => {
     try {
       const response = await axios.post(
         'http://localhost:8080/api/register-user',
-        formState,
+        {
+          name,
+          email,
+          password,
+        },
         {
           headers: {
             'Content-Type': 'application/json',
@@ -76,60 +75,51 @@ const Register = () => {
     }
   };
 
-  
-
-  const handleChange = (e) => {
-    dispatch({ name: e.target.name, value: e.target.value });
-  };
 
   return (
     <WithRole role="ROLE_ADMIN">
-      <StyledDiv style={{height: '600px'}}>
+      <StyledDiv className='black' style={{height: '600px'}}>
         <h1>Create New User</h1>
         <StyledForm onSubmit={handleSubmit}>
-          <div style={{flexDirection: 'column',display: 'flex'}}>
+          <DivInForm>
             <label>Username</label>
-            <input
+            <StyledInput
               type="text"
-              name="name"
-              value={formState.name}
-              onChange={handleChange}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               required
             />
-          </div>
+          </DivInForm>
 
-          <div style={{flexDirection: 'column',display: 'flex'}}>
+          <DivInForm>
             <label>Email</label>
-            <input
+            <StyledInput
               type="email"
-              name="email"
-              value={formState.email}
-              onChange={handleChange}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
-          </div>
+          </DivInForm>
 
-          <div style={{flexDirection: 'column',display: 'flex'}}>
+          <DivInForm>
             <label>Password</label>
-            <input
+            <StyledInput
               type="password"
-              name="password"
-              value={formState.password}
-              onChange={handleChange}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
-          </div>
+          </DivInForm>
 
-          <div style={{flexDirection: 'column',display: 'flex'}}>
+          <DivInForm>
             <label>Confirm Password</label>
-            <input
+            <StyledInput
               type="password"
-              name="confirmPassword"
-              value={formState.confirmPassword}
-              onChange={handleChange}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
-          </div>
+          </DivInForm>
 
           
 
@@ -145,5 +135,4 @@ const Register = () => {
 }
 
 
-// export default WithRole(Register, 'ROLE_ADMIN');
 export default Register;

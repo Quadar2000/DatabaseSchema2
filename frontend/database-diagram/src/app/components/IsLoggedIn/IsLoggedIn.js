@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuth } from '@/app/AuthProvider';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Spinner from '../Spinner/Spinner';
 
@@ -9,7 +9,9 @@ const IsLoggedIn = ({ children }) => {
   const { user, loading,refreshUser } = useAuth();
   const router = useRouter();
 
-  refreshUser();
+  useEffect(() => {
+      refreshUser();
+    },[])
 
   if (loading) return <Spinner/>;
   if (!user) {
