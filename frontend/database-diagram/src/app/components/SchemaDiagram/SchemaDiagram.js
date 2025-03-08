@@ -2,8 +2,8 @@ import React, { useRef, useEffect, useState } from 'react';
 import * as d3 from 'd3';
 import StyledButton from '../StyledButton/StyledButton';
 import { useAuth } from '@/app/AuthProvider';
-import StyledDiv from '../StyledDiv/StyledDiv';
-import StyledForm from '../StyledForm/StyledForm';
+import {StyledDiv, DivInForm} from '../StyledDiv/StyledDiv';
+import { StyledForm, StyledInput } from '../StyledForm/StyledForm';
 import { getCsrfToken } from '@/app/functions/getCsrfToken/getCsrfToken';
 import StyledListItem from '../StyledListItem/StyledListItem';
 import axios from 'axios';
@@ -334,7 +334,7 @@ const SchemaDiagram = () => {
 
   return (
     <div style={{ width: '100%'}}>
-      <div style={{ padding: '20px'}}>
+      <div style={{ display: 'flex',flexDirection: 'column',padding: '20px',gap: '20px'}}>
         
         {roles == 'ROLE_ADMIN'? <div></div> : <div>
           <StyledDiv>
@@ -359,64 +359,62 @@ const SchemaDiagram = () => {
               </ul>}
               
           </StyledDiv>
-          <div style={{ padding: '20px',borderBottom: '1px solid #eaeaea'}}></div>
           </div>
           }
           
-          <StyledDiv style={{padding: '20px',flexDirection: 'row'}}>
-            <StyledForm style={{flexDirection: 'row'}} onSubmit={handleSubmit}>
-              <div style={{flexDirection: 'column',display: 'flex'}}>
+            <StyledForm style={{flexDirection: 'row',backgroundColor: 'none'}} onSubmit={handleSubmit}>
+              <DivInForm>
                 <label>User</label>
-                <input 
+                <StyledInput 
                   type="text" 
                   value={user}
                   onChange={(e) => setUser(e.target.value)}
                   required 
                 />
-              </div>       
-              <div style={{flexDirection: 'column',display: 'flex'}}>
+              </DivInForm>       
+              <DivInForm>
                 <label style={{gap: '20px'}}>Host</label>
-                <input 
+                <StyledInput 
                   type="text" 
                   value={host}
                   onChange={(e) => setHost(e.target.value)}
                   required 
                 />
-              </div>
-              <div style={{flexDirection: 'column',display: 'flex'}}>
+              </DivInForm>
+              <DivInForm>
                 <label>Database</label>
-                <input 
+                <StyledInput  
                   type="text" 
                   value={database}
                   onChange={(e) => setDatabase(e.target.value)}
                   required 
                 />
-              </div>
-              <div style={{flexDirection: 'column',display: 'flex'}}>
+              </DivInForm>
+              <DivInForm>
                 <label>Password</label>
-                <input 
+                <StyledInput 
                   type="password" 
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required 
                 />
-              </div>
-              <div style={{flexDirection: 'column',display: 'flex'}}>
+              </DivInForm>
+              <DivInForm>
                 <label>Port</label>
-                <input 
+                <StyledInput  
                   type="text" 
                   value={port}
                   onChange={(e) => setPort(e.target.value)}
                   required 
                 />
-              </div>
+              </DivInForm>
               
               <StyledButton type = "submit">Generate Diagram</StyledButton>
+              <StyledButton onClick={() => clearAll()}>Clear Diagram</StyledButton>
+              <StyledButton onClick={downloadPNG} disabled={!showDiagram}>Download PNG</StyledButton>
               
             </StyledForm>
-            <StyledButton onClick={() => clearAll()}>Clear Diagram</StyledButton>
-            <StyledButton onClick={downloadPNG} disabled={!showDiagram}>Download PNG</StyledButton>
-          </StyledDiv>
+            
       </div>
       
       

@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 import { getCsrfToken } from "@/app/functions/getCsrfToken/getCsrfToken";
 import StyledButton from '@/app/components/StyledButton/StyledButton';
 import ConfirmModal from '@/app/components/ConfirmModal/ConfirmModal';
-import StyledForm from '@/app/components/StyledForm/StyledForm';
-import StyledDiv from '@/app/components/StyledDiv/StyledDiv';
+import {StyledForm, StyledInput} from '@/app/components/StyledForm/StyledForm';
+import {StyledDiv,DivInForm} from '@/app/components/StyledDiv/StyledDiv';
 import StyledListItem from '@/app/components/StyledListItem/StyledListItem';
 import axios from 'axios';
 import Spinner from '@/app/components/Spinner/Spinner';
@@ -223,119 +223,119 @@ const Permissions = () => {
   };
 
   return (
-    <StyledDiv style={{gap: '90px', marginTop: '50px'}}>
-      <div style={{display: 'flex', gap: '80px'}}>
-        <StyledDiv style={{border: '1px solid #ccc'}}>
-          <h1>Username</h1>
-          <p>{user.name}</p>
-        </StyledDiv>
-        <StyledDiv style={{border: '1px solid #ccc'}}>
-          <h1>Email</h1>
-          <p>{user.email}</p>
-        </StyledDiv>
-        
-      </div>
-      {/* <div style={{padding: '20px',borderBottom: '1px solid #eaeaea', width: '95%'}}></div> */}
-      <StyledDiv style={{border: '1px solid #ccc'}}>
-          <h1>Grant new permission of access to database</h1>
-          <p>Enter data of database</p>
-          <StyledForm style={{flexDirection: 'row'}}onSubmit={handleSubmit}>
-
-            <div style={{flexDirection: 'column',display: 'flex'}}>
-              <label>User</label>
-              <input 
-                type="text" 
-                value={dbUser}
-                onChange={(e) => setDbUser(e.target.value)}
-                required 
-              />
-            </div>
-
-            <div style={{flexDirection: 'column',display: 'flex'}}>
-              <label>Host</label>
-              <input 
-                type="text" 
-                value={host}
-                onChange={(e) => setHost(e.target.value)}
-                required 
-              />
-            </div>
-
-            <div style={{flexDirection: 'column',display: 'flex'}}>
-              <label>Database</label>
-              <input 
-                type="text" 
-                value={database}
-                onChange={(e) => setDatabase(e.target.value)}
-                required 
-              />
-            </div>
-
-            <div style={{flexDirection: 'column',display: 'flex'}}>
-              <label>Password</label>
-              <input 
-                type="password" 
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required 
-              />
-            </div>
-
-            <div style={{flexDirection: 'column',display: 'flex'}}>
-              <label>Port</label>
-              <input 
-                type="text" 
-                value={port}
-                onChange={(e) => setPort(e.target.value)}
-                required 
-              />
-            </div>
-
-            <StyledButton type = "submit">Grant permission</StyledButton>
-          </StyledForm>
-
-        </StyledDiv>
-      {/* <div style={{padding: '20px',borderTop: '1px solid #eaeaea', width: '95%'}}></div> */}
-      <StyledDiv>
-          <h1>Permitted Databases</h1>
-          {permissionsError && <p style={{ color: "red" }}>{permissionsError}</p>}
-          {permissions.length == 0 ? <p>Currently this user has no permission to access to any database.</p> :
-          <ul>
-            <StyledListItem>
-              <div className="column">Database</div>
-              <div className="column">Database User</div>
-              <div className="column">Host</div>
-              <div className="column">Port</div>
-              <div className="actions"></div>
-            </StyledListItem>
-            {permissions.map(permission => (
-              <StyledListItem key={permission.dbName}>
-                <div className="column" style={{width: '90px'}}>{permission.dbName}</div>
-                <div className="column" style={{width: '90px'}}>{permission.dbUser}</div>
-                <div className="column" style={{width: '90px'}}>{permission.dbHost}</div>
-                <div className="column" style={{width: '90px'}}>{permission.dbPort}</div>
-                <div className="actions">
-                  <StyledButton onClick={() => openModal(permission)}>
-                    Delete permission
-                  </StyledButton>
-                </div>
-              </StyledListItem>
-            ))}
-          </ul>}
-          {isModalOpen && (
-            <ConfirmModal
-              message="Are you sure you want to remove this permission?"
-              onConfirm={confirmDelete}
-              onCancel={closeModal}
-            />
-          )}
+    <WithRole role="ROLE_ADMIN">
+      <StyledDiv className='black' style={{gap: '90px', marginTop: '50px'}}>
+        <div style={{display: 'flex', gap: '80px'}}>
+          <StyledDiv>
+            <h1>Username</h1>
+            <p>{user.name}</p>
+          </StyledDiv>
+          <StyledDiv>
+            <h1>Email</h1>
+            <p>{user.email}</p>
+          </StyledDiv>
           
+        </div>
+        <StyledDiv>
+            <h1>Grant new permission of access to database</h1>
+            <p>Enter data of database</p>
+            <StyledForm style={{flexDirection: 'row'}}onSubmit={handleSubmit}>
 
-          {loading && <Spinner/>}
-          {error && <p style={{ color: "red" }}>{error}</p>}
-          {success && <p style={{ color: "green" }}>{success}</p>}
+              <DivInForm>
+                <label>User</label>
+                <StyledInput 
+                  type="text" 
+                  value={dbUser}
+                  onChange={(e) => setDbUser(e.target.value)}
+                  required 
+                />
+              </DivInForm>
+
+              <DivInForm>
+                <label>Host</label>
+                <StyledInput
+                  type="text" 
+                  value={host}
+                  onChange={(e) => setHost(e.target.value)}
+                  required 
+                />
+              </DivInForm>
+
+              <DivInForm>
+                <label>Database</label>
+                <StyledInput 
+                  type="text" 
+                  value={database}
+                  onChange={(e) => setDatabase(e.target.value)}
+                  required 
+                />
+              </DivInForm>
+
+              <DivInForm>
+                <label>Password</label>
+                <StyledInput 
+                  type="password" 
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required 
+                />
+              </DivInForm>
+
+              <DivInForm>
+                <label>Port</label>
+                <StyledInput 
+                  type="text" 
+                  value={port}
+                  onChange={(e) => setPort(e.target.value)}
+                  required 
+                />
+              </DivInForm>
+
+              <StyledButton type = "submit">Grant permission</StyledButton>
+            </StyledForm>
+
+          </StyledDiv>
+        <StyledDiv>
+            <h1>Permitted Databases</h1>
+            {permissionsError && <p style={{ color: "red" }}>{permissionsError}</p>}
+            {permissions.length == 0 ? <p>Currently this user has no permission to access to any database.</p> :
+            <ul>
+              <StyledListItem>
+                <div className="column">Database</div>
+                <div className="column">Database User</div>
+                <div className="column">Host</div>
+                <div className="column">Port</div>
+                <div className="actions"></div>
+              </StyledListItem>
+              {permissions.map(permission => (
+                <StyledListItem key={permission.dbName}>
+                  <div className="column" style={{width: '90px'}}>{permission.dbName}</div>
+                  <div className="column" style={{width: '90px'}}>{permission.dbUser}</div>
+                  <div className="column" style={{width: '90px'}}>{permission.dbHost}</div>
+                  <div className="column" style={{width: '90px'}}>{permission.dbPort}</div>
+                  <div className="actions">
+                    <StyledButton onClick={() => openModal(permission)}>
+                      Delete permission
+                    </StyledButton>
+                  </div>
+                </StyledListItem>
+              ))}
+            </ul>}
+            {isModalOpen && (
+              <ConfirmModal
+                message="Are you sure you want to remove this permission?"
+                onConfirm={confirmDelete}
+                onCancel={closeModal}
+              />
+            )}
+            
+
+            {loading && <Spinner/>}
+            {error && <p style={{ color: "red" }}>{error}</p>}
+            {success && <p style={{ color: "green" }}>{success}</p>}
+          </StyledDiv>
         </StyledDiv>
-      </StyledDiv>
+      </WithRole>
       
   );
 };

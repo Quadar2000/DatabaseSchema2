@@ -2,8 +2,8 @@
 
 import IsLoggedIn from '@/app/components/IsLoggedIn/IsLoggedIn';
 import StyledButton from '@/app/components/StyledButton/StyledButton';
-import StyledDiv from '@/app/components/StyledDiv/StyledDiv';
-import StyledForm from '@/app/components/StyledForm/StyledForm';
+import {DivInForm, StyledDiv} from '@/app/components/StyledDiv/StyledDiv';
+import {StyledForm,StyledInput }from '@/app/components/StyledForm/StyledForm';
 import { useEffect, useState } from 'react';
 import { getCsrfToken } from '@/app/functions/getCsrfToken/getCsrfToken';
 import axios from 'axios';
@@ -64,28 +64,28 @@ const ChangePassword = () => {
 
   return (
     <IsLoggedIn>
-      <StyledDiv style={{height: '600px'}}>
+      <StyledDiv className='black' style={{height: '600px'}}>
         <StyledForm onSubmit={handleSubmit}>
           <input type="hidden" name="csrfToken" value={csrfToken} />
-          <div style={{flexDirection: 'column',display: 'flex'}}>
+          <DivInForm>
             <label>New Password</label>
-            <input
+            <StyledInput
               type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               required
             />
-          </div>
+          </DivInForm>
 
-          <div style={{flexDirection: 'column',display: 'flex'}}>
+          <DivInForm>
             <label>Confirm Password</label>
-            <input
+            <StyledInput
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
-          </div>
+          </DivInForm>
 
           
 
